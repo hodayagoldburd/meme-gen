@@ -1,0 +1,50 @@
+
+.canvas-container {
+  width: 90vw;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  background-color: var(--clr-primary-dark);
+  border-radius: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#meme-canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 1em;
+}
+
+.gallery-container {
+  width: 100%;
+  text-align: center;
+}
+
+.gallery-container h2 {
+  color: var(--clr-primary-dark);
+  margin-bottom: 0.5em;
+}
+
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.8em;
+  justify-items: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.image-gallery img {
+  width: 100%;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.3s ease;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+.image-gallery img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}

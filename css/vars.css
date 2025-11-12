@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 
 :root {
   --clr-bg-main: #f7f3eb;
@@ -10,46 +13,9 @@
   --font-main: 'Lato', sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   font-family: var(--font-main);
   color: var(--clr-txt-main);
   background-color: var(--clr-bg-main);
 }
-
-.main-layout {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
-}
-
-
-.grid-layout {
-  display: grid;
-  grid-template-rows: auto auto auto;
-  gap: 1.5em;
-  justify-items: center;
-  padding: 1em;
-}
-
-
-.main-header {
-  text-align: center;
-  background-color: var(--clr-primary);
-  color: var(--clr-txt-light);
-  padding: 1em 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-
-/* .main-footer {
-  text-align: center;
-  padding: 0.8em;
-  background-color: var(--clr-accent);
-  color: var(--clr-txt-light);
-  font-size: 0.9em;
-} */

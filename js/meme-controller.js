@@ -36,25 +36,32 @@ function onShowGallery() {
 function renderMeme() {
     const meme = getMeme()
     if (!meme.selectedImgId) return
+
     const img = getImgById(meme.selectedImgId)
     const elImg = new Image()
     elImg.src = img.url
+
     elImg.onload = () => {
         gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height)
         gCtx.drawImage(elImg, 0, 0, gCanvas.width, gCanvas.height)
-        drawText(meme.lines[0].txt, gCanvas.width / 2, 50)
+
+        const line = meme.lines[meme.selectedLineIdx]
+        drawText(line.txt, gCanvas.width / 2, 60, line.size, line.color)
     }
 }
 
-function drawText(text, x, y) {
+
+function drawText(text, x, y, size, color = 'white') {
     gCtx.lineWidth = 2
     gCtx.strokeStyle = 'black'
-    gCtx.fillStyle = 'white'
-    gCtx.font = '30px Impact'
+    gCtx.fillStyle = color
+    gCtx.font = `${size}px Impact`
     gCtx.textAlign = 'center'
+    gCtx.textBaseline = 'top'
     gCtx.fillText(text, x, y)
     gCtx.strokeText(text, x, y)
 }
+
 
 function onSetLineTxt(txt) {
     setLineTxt(txt)
@@ -62,9 +69,19 @@ function onSetLineTxt(txt) {
 }
 
 function onDownloadMeme() {
-  const link = document.createElement('a')
-  link.download = 'my-meme.jpg'
-  link.href = gCanvas.toDataURL('image/jpeg')
-  link.click()
+    const link = document.createElement('a')
+    link.download = 'my-meme.jpg'
+    link.href = gCanvas.toDataURL('image/jpeg')
+    link.click()
+}
+
+function onChangeFontSize(diff) {
+    changeFontSize(diff)
+    renderMeme()
+}
+
+function onSetTextColor(color) {
+    setTextColor(color)
+    renderMeme()
 }
 

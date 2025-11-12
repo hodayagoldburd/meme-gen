@@ -58,3 +58,14 @@ function setLineTxt(txt) {
     gMeme.lines[gMeme.selectedLineIdx].txt = txt
 }
 
+function changeFontSize(diff) {
+  const line = gMeme.lines[gMeme.selectedLineIdx]
+  line.size += diff * 2
+  if (line.size < 16) line.size = 16
+  if (line.size > 80) line.size = 80
+}
+
+function setTextColor(color) {
+    gMeme.lines[gMeme.selectedLineIdx].color = color
+}
+

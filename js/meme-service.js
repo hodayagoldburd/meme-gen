@@ -98,3 +98,59 @@ function switchLine() {
     if (gMeme.selectedLineIdx >= gMeme.lines.length) gMeme.selectedLineIdx = 0
 }
 
+function setTextAlign(align) {
+    gMeme.lines[gMeme.selectedLineIdx].align = align
+
+    const line = gMeme.lines[gMeme.selectedLineIdx]
+    if (align === 'left') line.pos.x = 20
+    if (align === 'center') line.pos.x = gCanvas.width / 2
+    if (align === 'right') line.pos.x = gCanvas.width - 20
+}
+
+function setFontFamily(font) {
+    gMeme.lines[gMeme.selectedLineIdx].font = font
+}
+
+function deleteLine() {
+    if (!gMeme.lines.length) return
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+
+    gMeme.selectedLineIdx = 0
+    if (gMeme.lines.length === 0) {
+        addLine()
+    }
+}
+
+function moveLine(diff) {
+    gMeme.lines[gMeme.selectedLineIdx].pos.y += diff
+}
+function drawText(line) {
+    const { txt, pos, size, color, font = 'Impact', align = 'center' } = line
+    gCtx.lineWidth = 2
+    gCtx.strokeStyle = 'black'
+    gCtx.fillStyle = color
+    gCtx.font = `${size}px ${font}`
+    gCtx.textAlign = align
+    gCtx.textBaseline = 'top'
+
+    gCtx.fillText(txt, pos.x, pos.y)
+    gCtx.strokeText(txt, pos.x, pos.y)
+
+    const textWidth = gCtx.measureText(txt).width
+    const textHeight = size
+    line.bounds = {
+        x: pos.x - textWidth / 2,
+        y: pos.y,
+        width: textWidth,
+        height: textHeight
+    }
+}
+
+let gSavedMemes = loadFromStorage('savedMemes') || []
+
+function saveMeme() {
+    const memeCopy = JSON.parse(JSON.stringify(gMeme))
+    memeCopy.id = makeId()
+    gSavedMemes.push(memeCopy)
+    saveToStorage('savedMemes', gSavedMemes)
+}

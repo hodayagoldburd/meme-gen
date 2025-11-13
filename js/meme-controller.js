@@ -7,7 +7,11 @@ function onInit() {
     gCanvas = document.querySelector('#meme-canvas')
     gCtx = gCanvas.getContext('2d')
     renderGallery()
+
+    gCanvas.addEventListener('click', onCanvasClick)
+    gCanvas.addEventListener('touchstart', onCanvasTouch)
 }
+
 
 function renderGallery() {
     const imgs = getImgs()
@@ -46,10 +50,10 @@ function renderMeme() {
         gCtx.drawImage(elImg, 0, 0, gCanvas.width, gCanvas.height)
 
         meme.lines.forEach((line, idx) => {
-    if (!line.txt) return
-    drawText(line)
-    if (idx === meme.selectedLineIdx) drawFrame(line)
-})
+            if (!line.txt) return
+            drawText(line)
+            if (idx === meme.selectedLineIdx && idx !== -1) drawFrame(line)
+        })
     }
 }
 
@@ -72,29 +76,13 @@ function renderCleanMeme() {
     }
 }
 
-
-
-function drawText(line) {
-    const { txt, pos, size, color } = line
-    gCtx.lineWidth = 2
-    gCtx.strokeStyle = 'black'
-    gCtx.fillStyle = color
-    gCtx.font = `${size}px Impact`
-    gCtx.textAlign = 'center'
-    gCtx.textBaseline = 'middle'
-    gCtx.fillText(txt, pos.x, pos.y)
-    gCtx.strokeText(txt, pos.x, pos.y)
-}
-
-
-
 function onSetLineTxt(txt) {
     setLineTxt(txt)
     renderMeme()
 }
 
 function onDownloadMeme() {
- renderCleanMeme()
+    renderCleanMeme()
 
     setTimeout(() => {
         const link = document.createElement('a')
@@ -144,10 +132,96 @@ function drawFrame(line) {
     gCtx.strokeStyle = 'red'
     gCtx.lineWidth = 2
     gCtx.strokeRect(
-        line.pos.x - textWidth / 2 - 10,
-        line.pos.y - textHeight / 2 - 5,
-        textWidth + 20,
-        textHeight + 10
+        line.bounds.x - 10,
+        line.bounds.y - 5,
+        line.bounds.width + 20,
+        line.bounds.height + 10
     )
 }
 
+
+function onCanvasClick(ev) {
+    const { offsetX, offsetY } = ev
+    handleCanvasInteraction(offsetX, offsetY)
+}
+
+
+function onCanvasTouch(ev) {
+    ev.preventDefault()
+    const touch = ev.changedTouches[0]
+    const rect = gCanvas.getBoundingClientRect()
+    const offsetX = touch.clientX - rect.left
+    const offsetY = touch.clientY - rect.top
+
+    handleCanvasInteraction(offsetX, offsetY)
+}
+
+function handleCanvasInteraction(offsetX, offsetY) {
+    const meme = getMeme()
+
+    const clickedLineIdx = meme.lines.findIndex(line => {
+        if (!line.bounds) return false
+        const { x, y, width, height } = line.bounds
+        return offsetX >= x && offsetX <= x + width &&
+            offsetY >= y && offsetY <= y + height
+    })
+
+    if (clickedLineIdx === -1) {
+        meme.selectedLineIdx = -1
+        renderMeme()
+        document.querySelector('.text-input').value = ''
+        return
+    }
+
+    meme.selectedLineIdx = clickedLineIdx
+    renderMeme()
+    updateTextInput()
+}
+
+function onAlignLeft() {
+    setTextAlign('left')
+    renderMeme()
+}
+
+function onAlignCenter() {
+    setTextAlign('center')
+    renderMeme()
+}
+
+function onAlignRight() {
+    setTextAlign('right')
+    renderMeme()
+}
+
+function onSetFontFamily(font) {
+    setFontFamily(font)
+    renderMeme()
+}
+
+function onMoveLine(diff) {
+    moveLine(diff)
+    renderMeme()
+}
+
+function onDeleteLine() {
+    deleteLine()
+    renderMeme()
+    updateTextInput()
+}
+
+function onShareFacebook() {
+    renderCleanMeme()
+    setTimeout(() => {
+        const imgData = gCanvas.toDataURL('image/jpeg')
+        const fbUrl =
+            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imgData)}`
+
+        window.open(fbUrl, '_blank')
+        renderMeme()
+    }, 100)
+}
+
+function onSaveMeme() {
+    saveMeme()
+    console.log('Meme saved!')
+}

@@ -13,6 +13,10 @@
         <h1>Meme Generator</h1>
     </header>
 
+    <section class="features-bar">
+        <button class="btn btn-feature" onclick="onShowSavedMemes()">Saved Memes</button>
+    </section>
+
     <main class="main-content grid-layout">
 
         <section class="canvas-container">
@@ -23,13 +27,32 @@
             <input type="text" class="text-input" placeholder="Enter meme text" oninput="onSetLineTxt(this.value)">
             <div class="font-controls">
                 <button class="btn btn-line" onclick="onAddLine()">➕</button>
+                <button class="btn btn-line" onclick="onDeleteLine()">🗑️</button>
                 <button class="btn btn-line" onclick="onSwitchLine()">↕️</button>
-                <input type="color" class="color-picker" value="#ffffff" onchange="onSetTextColor(this.value)">
                 <button class="btn btn-font" onclick="onChangeFontSize(1)">A+</button>
                 <button class="btn btn-font" onclick="onChangeFontSize(-1)">A−</button>
             </div>
+
+            <div class="align-controls">
+                <button class="btn btn-font" onclick="onAlignLeft()">⬅️</button>
+                <button class="btn btn-font" onclick="onAlignCenter()">⏺️</button>
+                <button class="btn btn-font" onclick="onAlignRight()">➡️</button>
+                <button class="btn btn-line" onclick="onMoveLine(-10)">⬆️</button>
+                <button class="btn btn-line" onclick="onMoveLine(10)">⬇️</button>
+                <input type="color" class="color-picker" value="#ffffff" onchange="onSetTextColor(this.value)">
+
+                <select class="font-family-select" onchange="onSetFontFamily(this.value)">
+                    <option value="Impact">Impact</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Georgia">Georgia</option>
+                </select>
+            </div>
             <section class="control-actions">
+                <button class="btn btn-download" onclick="onSaveMeme()">Save</button>
                 <button class="btn btn-download" onclick="onDownloadMeme()">Download</button>
+                <button class="btn btn-download" onclick="onShareFacebook()">Share on Facebook</button>
+
             </section>
         </section>
 
@@ -41,7 +64,7 @@
 
     </main>
 
-
+    <script src="js/utils.js"></script>
     <script src="js/meme-service.js"></script>
     <script src="js/meme-controller.js"></script>
     <script src="js/main.js"></script>

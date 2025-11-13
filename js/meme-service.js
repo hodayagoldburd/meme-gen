@@ -26,12 +26,15 @@ const gMeme = {
     selectedLineIdx: 0,
     lines: [
         {
-            txt: 'Your text here',
+            txt: '',
             size: 30,
-            color: 'white'
+            color: 'white',
+            pos: { x: 200, y: 50 }
         }
     ]
 }
+
+
 
 function getImgs() {
     return gImgs
@@ -67,5 +70,31 @@ function changeFontSize(diff) {
 
 function setTextColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].color = color
+}
+
+function addLine() {
+    const x = gCanvas.width / 2
+    let y
+
+    const numLines = gMeme.lines.length
+    if (numLines === 1) y = gCanvas.height - 50
+    else y = gCanvas.height / 2
+
+    const newLine = {
+        txt: 'New line',
+        size: 30,
+        color: 'white',
+        pos: { x, y }
+    }
+
+    gMeme.lines.push(newLine)
+    gMeme.selectedLineIdx = gMeme.lines.length - 1
+}
+
+
+
+function switchLine() {
+    gMeme.selectedLineIdx++
+    if (gMeme.selectedLineIdx >= gMeme.lines.length) gMeme.selectedLineIdx = 0
 }
 

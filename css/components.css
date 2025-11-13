@@ -152,10 +152,12 @@
   align-items: center;
 }
 
-.btn-font {
+.btn-font,
+.btn-line {
   background-color: var(--clr-primary-dark);
 }
 
-.btn-font:hover {
+.btn-font:hover,
+.btn-line:hover {
   background-color: var(--clr-primary);
 }

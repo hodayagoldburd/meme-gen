@@ -22,6 +22,8 @@
         <section class="controls-container">
             <input type="text" class="text-input" placeholder="Enter meme text" oninput="onSetLineTxt(this.value)">
             <div class="font-controls">
+                <button class="btn btn-line" onclick="onAddLine()">➕</button>
+                <button class="btn btn-line" onclick="onSwitchLine()">↕️</button>
                 <input type="color" class="color-picker" value="#ffffff" onchange="onSetTextColor(this.value)">
                 <button class="btn btn-font" onclick="onChangeFontSize(1)">A+</button>
                 <button class="btn btn-font" onclick="onChangeFontSize(-1)">A−</button>

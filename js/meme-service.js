@@ -166,7 +166,7 @@ function drawText(line) {
 let gSavedMemes = loadFromStorage('savedMemes') || []
 
 function saveMeme() {
-    renderCleanMeme()
+    // renderCleanMeme()
     const memeCopy = JSON.parse(JSON.stringify(gMeme))
     memeCopy.id = makeId()
     memeCopy.preview = gCanvas.toDataURL('image/jpeg')

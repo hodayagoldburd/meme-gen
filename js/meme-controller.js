@@ -222,6 +222,64 @@ function onShareFacebook() {
 }
 
 function onSaveMeme() {
+    renderCleanMeme()
     saveMeme()
     console.log('Meme saved!')
 }
+
+function onLoadSavedMeme(id) {
+    const meme = gSavedMemes.find(m => m.id === id)
+    if (!meme) return
+    const loadedMeme = JSON.parse(JSON.stringify(meme))
+
+
+    gMeme.selectedImgId = loadedMeme.selectedImgId
+    gMeme.selectedLineIdx = loadedMeme.selectedLineIdx
+    gMeme.lines = loadedMeme.lines
+
+    const elContainer = document.querySelector('.saved-memes-container')
+    const elBtn = document.querySelector('.btn-feature')
+    elContainer.classList.add('hidden')
+    elBtn.innerText = 'Saved Memes'
+
+    renderMeme()
+    updateTextInput()
+}
+
+
+
+// function onShowSavedMemes() {
+//     renderSavedMemes()
+//     document.querySelector('.saved-memes-container').classList.remove('hidden')
+// }
+
+// function addSavedMemesListeners() {
+//     const items = document.querySelectorAll('.saved-meme-item')
+
+//     items.forEach(item => {
+//         item.addEventListener('pointerdown', ev => {
+//             const id = ev.target.dataset.id
+//             onLoadSavedMeme(id)
+//         })
+//     })
+// }
+
+function onToggleSavedMemes() {
+    const elContainer = document.querySelector('.saved-memes-container')
+    const elBtn = document.querySelector('.btn-feature')
+    if (elContainer.classList.contains('hidden')) {
+        renderSavedMemes()
+        elContainer.classList.remove('hidden')
+        elBtn.innerText = 'Close'
+    }
+    else {
+        elContainer.classList.add('hidden')
+        elBtn.innerText = 'Saved Memes'
+    }
+}
+
+function onCloseGallery() {
+    document.querySelector('.gallery-container').classList.add('hidden')
+    document.querySelector('.show-gallery-btn').classList.remove('hidden')
+}
+

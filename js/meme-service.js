@@ -62,10 +62,10 @@ function setLineTxt(txt) {
 }
 
 function changeFontSize(diff) {
-  const line = gMeme.lines[gMeme.selectedLineIdx]
-  line.size += diff * 2
-  if (line.size < 16) line.size = 16
-  if (line.size > 80) line.size = 80
+    const line = gMeme.lines[gMeme.selectedLineIdx]
+    line.size += diff * 2
+    if (line.size < 16) line.size = 16
+    if (line.size > 80) line.size = 80
 }
 
 function setTextColor(color) {
@@ -122,7 +122,13 @@ function deleteLine() {
 }
 
 function moveLine(diff) {
-    gMeme.lines[gMeme.selectedLineIdx].pos.y += diff
+    const line = gMeme.lines[gMeme.selectedLineIdx]
+    let newY = line.pos.y + diff
+    if (newY < 0) newY = 0
+    if (newY > gCanvas.height - line.size) {
+        newY = gCanvas.height - line.size
+    }
+    line.pos.y = newY
 }
 function drawText(line) {
     const { txt, pos, size, color, font = 'Impact', align = 'center' } = line
@@ -138,19 +144,62 @@ function drawText(line) {
 
     const textWidth = gCtx.measureText(txt).width
     const textHeight = size
+
+    let x
+    if (align === 'left') {
+        x = pos.x
+    } else if (align === 'right') {
+        x = pos.x - textWidth
+    } else {
+        x = pos.x - textWidth / 2
+    }
+
     line.bounds = {
-        x: pos.x - textWidth / 2,
+        x,
         y: pos.y,
         width: textWidth,
         height: textHeight
     }
 }
 
+
 let gSavedMemes = loadFromStorage('savedMemes') || []
 
 function saveMeme() {
+    renderCleanMeme()
     const memeCopy = JSON.parse(JSON.stringify(gMeme))
     memeCopy.id = makeId()
+    memeCopy.preview = gCanvas.toDataURL('image/jpeg')
+
     gSavedMemes.push(memeCopy)
     saveToStorage('savedMemes', gSavedMemes)
+
+    renderMeme()
+}
+
+
+function renderSavedMemes() {
+    const memes = getSavedMemes()
+    const elGrid = document.querySelector('.saved-memes-grid')
+
+    if (!memes.length) {
+        elGrid.innerHTML = '<p>No saved memes yet.</p>'
+        return
+    }
+
+    const htmls = memes.map(meme => `
+        <img 
+            class="saved-meme-item"
+            src="${meme.preview}" 
+            data-id="${meme.id}"
+            onclick="onLoadSavedMeme('${meme.id}')">
+    `)
+
+    elGrid.innerHTML = htmls.join('')
+
+    // addSavedMemesListeners()
+}
+
+function getSavedMemes(){
+    return gSavedMemes
 }

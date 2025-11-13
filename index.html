@@ -14,7 +14,13 @@
     </header>
 
     <section class="features-bar">
-        <button class="btn btn-feature" onclick="onShowSavedMemes()">Saved Memes</button>
+        <button class="btn btn-feature" onclick="onToggleSavedMemes()">Saved Memes</button>
+
+    </section>
+
+    <section class="saved-memes-container hidden">
+        <h2>Your Saved Memes</h2>
+        <div class="saved-memes-grid"></div>
     </section>
 
     <main class="main-content grid-layout">
@@ -61,7 +67,7 @@
             <div class="image-gallery"></div>
         </section>
         <button class="show-gallery-btn hidden" onclick="onShowGallery()">Show Gallery</button>
-
+        <button class="btn btn-feature close-gallery-btn" onclick="onCloseGallery()">Close Gallery</button>
     </main>
 
     <script src="js/utils.js"></script>

@@ -1,3 +1,8 @@
+.main-header {
+    height: 70px;
+    display: grid;
+    place-items: center;
+}
 
 .canvas-container {
   width: 90vw;
@@ -78,6 +83,10 @@
   transform: scale(1.05);
   filter: brightness(1.1);
   background-color: var(--clr-primary);
+}
+
+.close-gallery-btn {
+  margin-bottom: 1em;
 }
 
 .controls-container {
@@ -165,15 +174,13 @@
 
 .features-bar {
     width: 100%;
-    background-color: var(--clr-accent);
-    padding: 0.5em 1em;
-
+    height: 60px;
     display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center; 
-
-    border-bottom: 2px solid var(--clr-primary-dark);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    justify-items: center;
+    align-items: center;
+    z-index: 200;
+    background-color: var(--clr-accent);
+    position: relative;
 }
 
 
@@ -196,10 +203,15 @@
 }
 
 .saved-memes-container {
+    position: absolute;
+    top: 8vh;
+    left: 0;
     width: 100%;
     padding: 1em;
     text-align: center;
+    z-index: 100;
 }
+
 
 .saved-memes-container h2 {
     color: var(--clr-primary-dark);
@@ -214,6 +226,7 @@
     width: 90%;
     margin: 0 auto;
 }
+
 
 .saved-memes-grid img {
     width: 100%;

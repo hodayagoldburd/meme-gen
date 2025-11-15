@@ -213,6 +213,7 @@ function onShareFacebook() {
     renderCleanMeme()
     setTimeout(() => {
         const imgData = gCanvas.toDataURL('image/jpeg')
+
         const fbUrl =
             `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imgData)}`
 
@@ -221,30 +222,45 @@ function onShareFacebook() {
     }, 100)
 }
 
+
 function onSaveMeme() {
     renderCleanMeme()
-    saveMeme()
-    console.log('Meme saved!')
+
+    setTimeout(() => {
+        saveMeme()
+        renderMeme()
+        // console.log('Meme saved!')
+    }, 100)
 }
+
 
 function onLoadSavedMeme(id) {
     const meme = gSavedMemes.find(m => m.id === id)
     if (!meme) return
+
     const loadedMeme = JSON.parse(JSON.stringify(meme))
 
-
     gMeme.selectedImgId = loadedMeme.selectedImgId
-    gMeme.selectedLineIdx = loadedMeme.selectedLineIdx
     gMeme.lines = loadedMeme.lines
+    gMeme.selectedLineIdx = 0 
 
-    const elContainer = document.querySelector('.saved-memes-container')
-    const elBtn = document.querySelector('.btn-feature')
-    elContainer.classList.add('hidden')
-    elBtn.innerText = 'Saved Memes'
+    gMeme.lines.forEach((line, idx) => {
+        if (!line.pos) {
+            line.pos = {
+                x: gCanvas.width / 2,
+                y: idx === 0 ? 50 : gCanvas.height - 80
+            }
+        }
+    })
 
     renderMeme()
     updateTextInput()
+
+    document.querySelector('.saved-memes-container').classList.add('hidden')
+    document.querySelector('.btn-feature').innerText = 'Saved Memes'
 }
+
+
 
 
 

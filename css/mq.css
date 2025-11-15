@@ -1,0 +1,72 @@
+
+@media (min-width: 600px) {
+
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    grid-template-rows: auto auto;
+    gap: 1.5em;
+    align-items: start;
+  }
+
+  .canvas-container {
+    justify-self: center;
+    max-width: 450px;
+  }
+
+  .controls-container {
+    align-self: start;
+    max-width: 300px;
+  }
+
+  .gallery-container {
+    grid-column: 1 / -1;
+  }
+
+  .saved-memes-container {
+    grid-column: 1 / -1;
+  }
+}
+
+
+@media (min-width: 980px) {
+
+  .grid-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "gallery canvas controls"
+      "gallery canvas controls";
+    gap: 1.5em;
+    align-items: start;
+  }
+
+  .gallery-container {
+    grid-area: gallery;
+    width: 100%;
+    align-self: start;
+  }
+
+  .canvas-container {
+    grid-area: canvas;
+    max-width: 500px;
+    align-self: start;
+  }
+
+  .controls-container {
+    grid-area: controls;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .saved-memes-container {
+    grid-column: 2;
+    width: 100%;
+    margin-top: 1em;
+  }
+
+  .gallery-container {
+  max-width: 300px;
+}
+}

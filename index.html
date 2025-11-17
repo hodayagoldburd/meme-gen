@@ -9,19 +9,18 @@
 </head>
 
 <body onload="onInit()" class="main-layout">
+
     <header class="main-header">
         <h1>Meme Generator</h1>
+        <button class="header-btn" onclick="onToggleSavedMemes()">Saved Memes</button>
     </header>
 
-    <section class="features-bar">
-        <button class="btn btn-feature" onclick="onToggleSavedMemes()">Saved Memes</button>
-
-    </section>
-
     <section class="saved-memes-container hidden">
+        <button class="close-saved-btn" onclick="onCloseSaved()">✖</button>
         <h2>Your Saved Memes</h2>
         <div class="saved-memes-grid"></div>
     </section>
+
 
     <main class="main-content grid-layout">
 
@@ -82,7 +81,7 @@
     <script src="js/saved-memes-service.js"></script>
     <script src="js/text-service.js"></script>
     <script src="js/meme-controller.js"></script>
-    
+
 </body>
 
 </html>

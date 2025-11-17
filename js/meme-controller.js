@@ -257,7 +257,7 @@ function onLoadSavedMeme(id) {
     updateTextInput()
 
     document.querySelector('.saved-memes-container').classList.add('hidden')
-    document.querySelector('.btn-feature').innerText = 'Saved Memes'
+    document.querySelector('.header-btn').innerText = 'Saved Memes'
 }
 
 
@@ -282,7 +282,7 @@ function onLoadSavedMeme(id) {
 
 function onToggleSavedMemes() {
     const elContainer = document.querySelector('.saved-memes-container')
-    const elBtn = document.querySelector('.btn-feature')
+    const elBtn = document.querySelector('.header-btn')
     if (elContainer.classList.contains('hidden')) {
         renderSavedMemes()
         elContainer.classList.remove('hidden')
@@ -292,6 +292,11 @@ function onToggleSavedMemes() {
         elContainer.classList.add('hidden')
         elBtn.innerText = 'Saved Memes'
     }
+}
+
+function onCloseSaved() {
+    document.querySelector('.saved-memes-container').classList.add('hidden')
+    document.querySelector('.header-btn').innerText = 'Saved Memes'
 }
 
 function onCloseGallery() {
